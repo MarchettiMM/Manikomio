@@ -4,674 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manikomio - Canal de Humor</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --color-primary: #FF6BC9;
-            --color-secondary: #6B5AED;
-            --color-accent: #FFD166;
-            --color-success: #06D6A0;
-            --color-background: #FFFAF0;
-            --color-text: #333333;
-            --color-card: #FFFFFF;
-            --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            --radius: 20px;
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Comic Neue', cursive, sans-serif;
-        }
-
-        body {
-            background-color: var(--color-background);
-            color: var(--color-text);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30,20 Q50,5 70,20 T90,40 Q85,60 70,70 T50,85 Q30,70 20,50 T10,30 Q15,15 30,20Z" fill="%23FF6BC9" opacity="0.05"/><circle cx="25" cy="25" r="8" fill="%236B5AED" opacity="0.05"/><circle cx="75" cy="30" r="6" fill="%2306D6A0" opacity="0.05"/></svg>');
-        }
-
-        /* Header e Navegação */
-        header {
-            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-            border-bottom: 5px solid var(--color-accent);
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, var(--color-accent), var(--color-success));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            color: white;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .logo-icon::after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--color-primary);
-            border-radius: 50%;
-            top: 5px;
-            left: 5px;
-        }
-
-        .logo h1 {
-            font-size: 2.5rem;
-            color: white;
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
-            letter-spacing: 1px;
-        }
-
-        .mushroom {
-            display: inline-block;
-            width: 25px;
-            height: 25px;
-            background: white;
-            border-radius: 50% 50% 0 0;
-            position: relative;
-            margin: 0 5px;
-        }
-
-        .mushroom::after {
-            content: "";
-            position: absolute;
-            width: 20px;
-            height: 10px;
-            background: #8B4513;
-            border-radius: 0 0 10px 10px;
-            bottom: -10px;
-            left: 2.5px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-            margin-top: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-            padding: 10px 20px;
-            border-radius: 50px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        nav a:hover, nav a.active {
-            background-color: white;
-            color: var(--color-primary);
-            transform: translateY(-5px);
-        }
-
-        /* Conteúdo Principal */
-        main {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        /* Seção de vídeos em rolagem horizontal */
-        .section-title {
-            font-size: 2rem;
-            margin: 2rem 0 1.5rem;
-            color: var(--color-secondary);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .section-title i {
-            color: var(--color-primary);
-        }
-
-        .videos-scroll {
-            overflow-x: auto;
-            padding: 20px 0;
-            margin-bottom: 40px;
-            scrollbar-width: thin;
-            scrollbar-color: var(--color-primary) var(--color-background);
-        }
-
-        .videos-container {
-            display: flex;
-            gap: 25px;
-            padding-bottom: 15px;
-            min-width: min-content;
-        }
-
-        .video-card {
-            min-width: 320px;
-            background-color: var(--color-card);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            flex-shrink: 0;
-        }
-
-        .video-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .video-thumbnail {
-            height: 180px;
-            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .video-thumbnail i {
-            font-size: 4rem;
-            color: white;
-            opacity: 0.8;
-        }
-
-        .play-button {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--color-primary);
-            font-size: 2rem;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .play-button:hover {
-            transform: scale(1.1);
-            background-color: white;
-        }
-
-        .video-info {
-            padding: 20px;
-        }
-
-        .video-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--color-secondary);
-        }
-
-        .video-stats {
-            display: flex;
-            justify-content: space-between;
-            color: #666;
-            font-size: 0.9rem;
-            margin-top: 15px;
-        }
-
-        /* Linha do tempo */
-        .timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 3rem auto;
-            padding: 2rem 0;
-        }
-
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            background-color: var(--color-accent);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -3px;
-            border-radius: 10px;
-        }
-
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-            margin-bottom: 40px;
-        }
-
-        .timeline-item:nth-child(odd) {
-            left: 0;
-        }
-
-        .timeline-item:nth-child(even) {
-            left: 50%;
-        }
-
-        .timeline-content {
-            padding: 25px;
-            background-color: var(--color-card);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .timeline-content::after {
-            content: '';
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            right: -12.5px;
-            background-color: var(--color-card);
-            top: 30px;
-            border-radius: 50%;
-            z-index: 1;
-            box-shadow: 0 0 0 5px var(--color-accent);
-        }
-
-        .timeline-item:nth-child(even) .timeline-content::after {
-            left: -12.5px;
-            right: auto;
-        }
-
-        .timeline-year {
-            font-weight: bold;
-            color: var(--color-primary);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Estatísticas */
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 3rem 0;
-        }
-
-        .stat-card {
-            background-color: var(--color-card);
-            border-radius: var(--radius);
-            padding: 30px;
-            text-align: center;
-            flex: 1;
-            min-width: 200px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--color-primary);
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 1.2rem;
-            color: var(--color-secondary);
-        }
-
-        /* Páginas de conteúdo */
-        .page-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .page-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Equipe */
-        .team-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-            margin: 3rem 0;
-        }
-
-        .team-member {
-            background-color: var(--color-card);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px);
-        }
-
-        .member-photo {
-            height: 200px;
-            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 5rem;
-        }
-
-        .member-info {
-            padding: 25px;
-        }
-
-        .member-name {
-            font-size: 1.5rem;
-            color: var(--color-secondary);
-            margin-bottom: 10px;
-        }
-
-        .member-role {
-            color: var(--color-primary);
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        /* Contato */
-        .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin: 3rem 0;
-        }
-
-        .contact-info {
-            flex: 1;
-            min-width: 300px;
-            background-color: var(--color-card);
-            border-radius: var(--radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-        }
-
-        .contact-form {
-            flex: 1;
-            min-width: 300px;
-            background-color: var(--color-card);
-            border-radius: var(--radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-        }
-
-        .contact-details h3 {
-            color: var(--color-secondary);
-            margin-bottom: 5px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--color-secondary);
-            font-weight: bold;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            border-color: var(--color-primary);
-            outline: none;
-        }
-
-        .btn {
-            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(107, 90, 237, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, var(--color-secondary), #4a3fcc);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-            margin-top: 4rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 2rem 0;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background-color: white;
-            color: var(--color-primary);
-            transform: translateY(-5px);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin: 2rem 0;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--color-accent);
-        }
-
-        .copyright {
-            margin-top: 2rem;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-
-        /* Responsividade */
-        @media (max-width: 768px) {
-            .logo-container {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
-            
-            .logo h1 {
-                font-size: 2rem;
-            }
-            
-            nav ul {
-                gap: 10px;
-            }
-            
-            nav a {
-                padding: 8px 15px;
-                font-size: 1rem;
-            }
-            
-            .timeline::after {
-                left: 31px;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
-            }
-            
-            .timeline-item:nth-child(even) {
-                left: 0;
-            }
-            
-            .timeline-content::after {
-                left: -12.5px;
-                right: auto;
-            }
-            
-            .section-title {
-                font-size: 1.7rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            main {
-                padding: 1rem;
-            }
-            
-            .video-card {
-                min-width: 280px;
-            }
-            
-            .stat-card {
-                min-width: 100%;
-            }
-        }
-
-        /* Decorações */
-        .decoration {
-            position: absolute;
-            z-index: -1;
-        }
-
-        .rainbow {
-            width: 100px;
-            height: 20px;
-            border-radius: 50%;
-            background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-            opacity: 0.1;
-            top: 10%;
-            left: 5%;
-        }
-
-        .mushroom-decoration {
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50% 50% 0 0;
-            position: relative;
-            bottom: 10%;
-            right: 5%;
-        }
-
-        .mushroom-decoration::after {
-            content: "";
-            position: absolute;
-            width: 30px;
-            height: 15px;
-            background: #8B4513;
-            border-radius: 0 0 10px 10px;
-            bottom: -15px;
-            left: 5px;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header com logo e navegação -->
     <header>
         <div class="logo-container">
             <div class="logo">
-                <div class="logo-icon">M</div>
+                <img src="logo.jpg" alt="Logo Manikomio" class="logo-image">
                 <h1>Manikomio <span class="mushroom"></span></h1>
             </div>
         </div>
@@ -846,7 +188,7 @@
         <!-- Página Sobre o Manikas -->
         <section id="about" class="page-content">
             <h2 class="section-title"><i class="fas fa-users"></i> Sobre os Manikas</h2>
-            <p style="margin-bottom: 2rem; font-size: 1.2rem;">Conheça a dupla que faz a magia acontecer no canal Manikomio! Orochinho e Doazin são os responsáveis por trazer risadas e entretenimento para centenas de milhares de fãs.</p>
+            <p class="page-description">Conheça a dupla que faz a magia acontecer no canal Manikomio! Orochinho e Doazin são os responsáveis por trazer risadas e entretenimento para centenas de milhares de fãs.</p>
             
             <div class="team-container">
                 <!-- Orochinho -->
@@ -858,7 +200,7 @@
                         <h3 class="member-name">Orochinho</h3>
                         <div class="member-role">Apresentador e Criador de Conteúdo</div>
                         <p>Conhecido por seu humor ácido e reações exageradas, Orochinho é o cérebro por trás de muitos dos desafios mais malucos do canal. Sempre com uma tirada pronta, ele mantém o ritmo das gravações acelerado e divertido.</p>
-                        <div style="margin-top: 15px; color: var(--color-primary);">
+                        <div class="member-traits">
                             <i class="fas fa-bolt"></i> Energia máxima | <i class="fas fa-lightbulb"></i> Ideias criativas
                         </div>
                     </div>
@@ -873,36 +215,36 @@
                         <h3 class="member-name">Doazin</h3>
                         <div class="member-role">Apresentador e Editor Chefe</div>
                         <p>Doazin é o contraponto perfeito para Orochinho. Com um humor mais sarcástico e uma presença de cena impecável, ele frequentemente vira o jogo nos desafios mais difíceis. Responsável pela edição e pelo ritmo cômico dos vídeos.</p>
-                        <div style="margin-top: 15px; color: var(--color-primary);">
+                        <div class="member-traits">
                             <i class="fas fa-magic"></i> Timing perfeito | <i class="fas fa-video"></i> Editor experiente
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div style="background-color: var(--color-card); padding: 30px; border-radius: var(--radius); margin-top: 40px; box-shadow: var(--shadow);">
-                <h3 style="color: var(--color-secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-handshake"></i> A Dinâmica da Dupla</h3>
+            <div class="dynamic-section">
+                <h3><i class="fas fa-handshake"></i> A Dinâmica da Dupla</h3>
                 <p>O sucesso do Manikomio está na química única entre Orochinho e Doazin. Enquanto Orochinho é impulsivo e cheio de energia, Doazin é calculista e estratégico. Juntos, eles criam situações cômicas que parecem roteirizadas, mas são sempre espontâneas e genuínas.</p>
-                <p style="margin-top: 15px;">Os fãs adoram os momentos em que os dois se enfrentam em desafios, criando rivalidades saudáveis que sempre terminam em muitas risadas. A dupla também é conhecida por interagir constantemente com a comunidade, incorporando sugestões dos fãs em seus vídeos.</p>
+                <p>Os fãs adoram os momentos em que os dois se enfrentam em desafios, criando rivalidades saudáveis que sempre terminam em muitas risadas. A dupla também é conhecida por interagir constantemente com a comunidade, incorporando sugestões dos fãs em seus vídeos.</p>
             </div>
         </section>
         
         <!-- Página A Produção -->
         <section id="production" class="page-content">
             <h2 class="section-title"><i class="fas fa-video"></i> A Equipe de Produção</h2>
-            <p style="margin-bottom: 2rem; font-size: 1.2rem;">Por trás das câmeras, uma equipe talentosa trabalha para garantir que cada vídeo do Manikomio seja divertido, bem produzido e de alta qualidade. Conheça os profissionais que fazem a magia acontecer!</p>
+            <p class="page-description">Por trás das câmeras, uma equipe talentosa trabalha para garantir que cada vídeo do Manikomio seja divertido, bem produzido e de alta qualidade. Conheça os profissionais que fazem a magia acontecer!</p>
             
             <div class="team-container">
                 <!-- Lucy -->
                 <div class="team-member">
-                    <div class="member-photo" style="background: linear-gradient(45deg, #FF6BC9, #FF9E6D);">
+                    <div class="member-photo lucy-photo">
                         <i class="fas fa-film"></i>
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Lucy</h3>
                         <div class="member-role">Diretora de Produção</div>
                         <p>Responsável por coordenar todas as gravações e garantir que o cronograma seja cumprido. Lucy é a organizadora da equipe, sempre com planos detalhados e soluções para imprevistos.</p>
-                        <div style="margin-top: 15px; color: var(--color-primary);">
+                        <div class="member-traits">
                             <i class="fas fa-clipboard-list"></i> Organização | <i class="fas fa-calendar-alt"></i> Planejamento
                         </div>
                     </div>
@@ -910,14 +252,14 @@
                 
                 <!-- Killua -->
                 <div class="team-member">
-                    <div class="member-photo" style="background: linear-gradient(45deg, #06D6A0, #0CB48A);">
+                    <div class="member-photo killua-photo">
                         <i class="fas fa-camera"></i>
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Killua</h3>
                         <div class="member-role">Diretor de Fotografia</div>
                         <p>Especialista em iluminação e enquadramento, Killua garante que cada cena tenha a qualidade visual que o canal merece. Também é responsável pelos efeitos visuais especiais.</p>
-                        <div style="margin-top: 15px; color: var(--color-primary);">
+                        <div class="member-traits">
                             <i class="fas fa-lightbulb"></i> Iluminação | <i class="fas fa-eye"></i> Enquadramento
                         </div>
                     </div>
@@ -925,14 +267,14 @@
                 
                 <!-- Paulo -->
                 <div class="team-member">
-                    <div class="member-photo" style="background: linear-gradient(45deg, #6B5AED, #8A7AFF);">
+                    <div class="member-photo paulo-photo">
                         <i class="fas fa-music"></i>
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Paulo</h3>
                         <div class="member-role">Editor de Som e Trilha</div>
                         <p>Paulo é o responsável por toda a parte sonora do canal. Desde a captação de áudio durante as gravações até a trilha sonora e efeitos especiais que dão vida aos vídeos.</p>
-                        <div style="margin-top: 15px; color: var(--color-primary);">
+                        <div class="member-traits">
                             <i class="fas fa-volume-up"></i> Áudio | <i class="fas fa-headphones"></i> Trilha sonora
                         </div>
                     </div>
@@ -940,28 +282,28 @@
                 
                 <!-- Jojo -->
                 <div class="team-member">
-                    <div class="member-photo" style="background: linear-gradient(45deg, #FFD166, #FFB347);">
+                    <div class="member-photo jojo-photo">
                         <i class="fas fa-paint-brush"></i>
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Jojo</h3>
                         <div class="member-role">Designer e Motion Graphics</div>
                         <p>Jojo cria todas as artes, thumbnails, animações e elementos visuais do canal. Seu trabalho colorido e cartoonizado define a identidade visual única do Manikomio.</p>
-                        <div style="margin-top: 15px; color: var(--color-primary);">
+                        <div class="member-traits">
                             <i class="fas fa-palette"></i> Design | <i class="fas fa-play-circle"></i> Animações
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div style="background-color: var(--color-card); padding: 30px; border-radius: var(--radius); margin-top: 40px; box-shadow: var(--shadow);">
-                <h3 style="color: var(--color-secondary); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-cogs"></i> Como é Feito um Vídeo do Manikomio</h3>
-                <ol style="padding-left: 20px;">
-                    <li style="margin-bottom: 10px;"><strong>Brainstorming:</strong> A equipe se reúne para discutir ideias e conceitos para novos vídeos.</li>
-                    <li style="margin-bottom: 10px;"><strong>Pré-produção:</strong> Lucy planeja os detalhes da gravação, enquanto Jojo prepara os elementos visuais necessários.</li>
-                    <li style="margin-bottom: 10px;"><strong>Gravação:</strong> Orochinho e Doazin gravam o conteúdo, com Killua cuidando da fotografia e Paulo do áudio.</li>
-                    <li style="margin-bottom: 10px;"><strong>Pós-produção:</strong> Doazin edita o vídeo, Paulo adiciona trilha sonora e efeitos, e Jojo finaliza com gráficos e animações.</li>
-                    <li style="margin-bottom: 10px;"><strong>Revisão e publicação:</strong> Toda a equipe assiste ao vídeo final, faz ajustes e então publica para os fãs!</li>
+            <div class="process-section">
+                <h3><i class="fas fa-cogs"></i> Como é Feito um Vídeo do Manikomio</h3>
+                <ol class="process-list">
+                    <li><strong>Brainstorming:</strong> A equipe se reúne para discutir ideias e conceitos para novos vídeos.</li>
+                    <li><strong>Pré-produção:</strong> Lucy planeja os detalhes da gravação, enquanto Jojo prepara os elementos visuais necessários.</li>
+                    <li><strong>Gravação:</strong> Orochinho e Doazin gravam o conteúdo, com Killua cuidando da fotografia e Paulo do áudio.</li>
+                    <li><strong>Pós-produção:</strong> Doazin edita o vídeo, Paulo adiciona trilha sonora e efeitos, e Jojo finaliza com gráficos e animações.</li>
+                    <li><strong>Revisão e publicação:</strong> Toda a equipe assiste ao vídeo final, faz ajustes e então publica para os fãs!</li>
                 </ol>
             </div>
         </section>
@@ -969,11 +311,11 @@
         <!-- Página Contato -->
         <section id="contact" class="page-content">
             <h2 class="section-title"><i class="fas fa-envelope"></i> Entre em Contato</h2>
-            <p style="margin-bottom: 2rem; font-size: 1.2rem;">Tem alguma ideia para o canal, proposta de parceria ou simplesmente quer mandar um salve para a equipe? Entre em contato conosco!</p>
+            <p class="page-description">Tem alguma ideia para o canal, proposta de parceria ou simplesmente quer mandar um salve para a equipe? Entre em contato conosco!</p>
             
             <div class="contact-container">
                 <div class="contact-info">
-                    <h3 style="color: var(--color-secondary); margin-bottom: 30px;">Informações de Contato</h3>
+                    <h3>Informações de Contato</h3>
                     
                     <div class="contact-item">
                         <div class="contact-icon">
@@ -982,7 +324,7 @@
                         <div class="contact-details">
                             <h3>E-mail</h3>
                             <p>contato@manikomio.com.br</p>
-                            <p style="font-size: 0.9rem; color: #666;">Para parcerias, propostas comerciais e geral</p>
+                            <p class="contact-note">Para parcerias, propostas comerciais e geral</p>
                         </div>
                     </div>
                     
@@ -993,7 +335,7 @@
                         <div class="contact-details">
                             <h3>Celular</h3>
                             <p>+55 (11) 98765-4321</p>
-                            <p style="font-size: 0.9rem; color: #666;">Atendimento comercial: Segunda a Sexta, 9h-18h</p>
+                            <p class="contact-note">Atendimento comercial: Segunda a Sexta, 9h-18h</p>
                         </div>
                     </div>
                     
@@ -1005,7 +347,7 @@
                             <h3>Caixa Postal</h3>
                             <p>Lucia Marikas (Caixa Postal 1234)</p>
                             <p>São Paulo - SP, CEP: 01234-567</p>
-                            <p style="font-size: 0.9rem; color: #666;">Para cartas, presentes e correspondências</p>
+                            <p class="contact-note">Para cartas, presentes e correspondências</p>
                         </div>
                     </div>
                     
@@ -1022,7 +364,7 @@
                 </div>
                 
                 <div class="contact-form">
-                    <h3 style="color: var(--color-secondary); margin-bottom: 30px;">Envie uma Mensagem</h3>
+                    <h3>Envie uma Mensagem</h3>
                     
                     <form id="contactForm">
                         <div class="form-group">
@@ -1063,23 +405,23 @@
     <!-- Footer -->
     <footer>
         <div class="logo" style="justify-content: center;">
-            <div class="logo-icon">M</div>
+            <img src="logo.jpeg" alt="Logo Manikomio" class="logo-image">
             <h2>Manikomio <span class="mushroom"></span></h2>
         </div>
         
-        <p style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">Canal de humor com Orochinho e Doazin trazendo entretenimento, desafios malucos e muita diversão para toda a família!</p>
+        <p class="footer-description">Canal de humor com Orochinho e Doazin trazendo entretenimento, desafios malucos e muita diversão para toda a família!</p>
         
         <div class="social-links">
-            <a href="https://youtube.com/@Manikomioboko" class="social-link" target="_blank">
+            <a href="https://youtube.com/@Manikomioboko" class="social-link" target="_blank" aria-label="YouTube">
                 <i class="fab fa-youtube"></i>
             </a>
-            <a href="https://instagram.com/canalmanikomio" class="social-link" target="_blank">
+            <a href="https://instagram.com/canalmanikomio" class="social-link" target="_blank" aria-label="Instagram">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" class="social-link">
+            <a href="#" class="social-link" aria-label="Twitter">
                 <i class="fab fa-twitter"></i>
             </a>
-            <a href="#" class="social-link">
+            <a href="#" class="social-link" aria-label="TikTok">
                 <i class="fab fa-tiktok"></i>
             </a>
         </div>
@@ -1095,7 +437,7 @@
         
         <div class="copyright">
             <p>&copy; 2023 Manikomio - Todos os direitos reservados</p>
-            <p>Desenvolvido com <i class="fas fa-heart" style="color: #FF6BC9;"></i> pela equipe Manikomio</p>
+            <p>Desenvolvido com <i class="fas fa-heart"></i> pela equipe Manikomio</p>
         </div>
     </footer>
 
@@ -1103,84 +445,6 @@
     <div class="decoration rainbow"></div>
     <div class="decoration mushroom-decoration"></div>
 
-    <script>
-        // Navegação entre páginas
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove a classe active de todos os links
-                document.querySelectorAll('.nav-link').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Adiciona a classe active ao link clicado
-                this.classList.add('active');
-                
-                // Esconde todas as páginas
-                document.querySelectorAll('.page-content').forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Mostra a página correspondente
-                const pageId = this.getAttribute('data-page');
-                document.getElementById(pageId).classList.add('active');
-                
-                // Scroll para o topo
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        });
-        
-        // Formulário de contato
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Obrigado pela sua mensagem! A equipe do Manikomio entrará em contato em breve.');
-            this.reset();
-        });
-        
-        // Efeito nos botões de play dos vídeos
-        document.querySelectorAll('.play-button').forEach(button => {
-            button.addEventListener('click', function() {
-                const videoCard = this.closest('.video-card');
-                const videoTitle = videoCard.querySelector('.video-title').textContent;
-                alert(`Reproduzindo: ${videoTitle}\n\nEm um site real, este botão iniciaria o vídeo.`);
-            });
-        });
-        
-        // Efeito de hover nas estatísticas
-        document.querySelectorAll('.stat-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.05)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-        
-        // Decorações flutuantes
-        const decorations = document.querySelectorAll('.decoration');
-        decorations.forEach((decoration, index) => {
-            // Posiciona aleatoriamente
-            const top = Math.random() * 80 + 10;
-            const left = Math.random() * 80 + 10;
-            decoration.style.top = `${top}%`;
-            decoration.style.left = `${left}%`;
-            
-            // Animação flutuante
-            let direction = 1;
-            let position = 0;
-            
-            setInterval(() => {
-                position += 0.5 * direction;
-                
-                if (position > 5 || position < -5) {
-                    direction *= -1;
-                }
-                
-                decoration.style.transform = `translateY(${position}px)`;
-            }, 100);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
