@@ -35,8 +35,10 @@ header {
     top: 0;
     z-index: 100;
     box-shadow: var(--shadow);
-    border-bottom: 5px solid var(--color-accent);
+    border-bottom: 4px solid var(--color-accent);
     position: relative; /* Adicionar para o overlay funcionar */
+    height: 220px; /* Altura personalizada */
+    width: 100%; /* Largura total */
 }
 
 .logo-container {
@@ -57,7 +59,7 @@ header {
     border-radius: 50%;
     object-fit: cover;
     margin-right: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.4);
     border: 3px solid white;
 }
 
@@ -65,10 +67,10 @@ header {
     font-size: 2.5rem;
     color: white;
     text-shadow: 
-        -1px -1px 0 #000,
-        1px -1px 0 #000,
-        -1px 1px 0 #000,
-        1px 1px 0 #000,
+        -1px -1px 0 #555,  /* Cinza escuro */
+        1px -1px 0 #555,
+        -1px 1px 0 #555,
+        1px 1px 0 #555,
         3px 3px 0 rgba(0,0,0,0.2);
     letter-spacing: 1px;
 }
@@ -148,6 +150,14 @@ main {
 
 .section-title i {
     color: var(--color-primary);
+}
+
+.icone-peq {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: sepia(1) saturate(1000%) hue-rotate(200deg);
 }
 
 .page-description {
