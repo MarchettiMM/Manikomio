@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Header com logo e navegação -->
     <header>
+        <div class="header-overlay"></div>
         <div class="logo-container">
             <div class="logo">
                 <img src="logo.jpg" alt="Logo Manikomio" class="logo-image">
@@ -27,24 +27,44 @@
         </nav>
     </header>
 
-    <!-- Conteúdo Principal -->
     <main>
-        <!-- Página Inicial -->
         <section id="home" class="page-content active">
             <h2 class="section-title"><img src="iconepeq.png" alt="Ícone Pequeno" class="icone-peq"> Vídeos em Destaque</h2>
             
-            <!-- Barra de rolagem horizontal com vídeos -->
+            <div class="video-filters">
+                <div class="filter-group">
+                    <label for="sortBy">Ordenar por:</label>
+                    <select id="sortBy" class="filter-select">
+                        <option value="dateDesc">Data (Mais Recente)</option>
+                        <option value="dateAsc">Data (Mais Antigo)</option>
+                        <option value="viewsDesc">Visualizações (Mais)</option>
+                        <option value="viewsAsc">Visualizações (Menos)</option>
+                        <option value="likesDesc">Curtidas (Mais)</option>
+                        <option value="likesAsc">Curtidas (Menos)</option>
+                        <option value="commentsDesc">Comentários (Mais)</option>
+                        <option value="commentsAsc">Comentários (Menos)</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="searchVideo">Buscar vídeo:</label>
+                    <input type="text" id="searchVideo" class="filter-input" placeholder="Digite o título...">
+                </div>
+
+                <button id="applyFilters" class="btn filter-btn">
+                    <i class="fas fa-filter"></i> Aplicar Filtros
+                </button>
+            </div>
+
             <div class="videos-scroll">
                 <div class="videos-container" id="videos-container">
-                    <!-- Os vídeos serão carregados aqui via JavaScript -->
                     <div class="video-loading">
                         <i class="fas fa-spinner fa-spin"></i>
                         <p>Carregando vídeos...</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- Estatísticas do canal -->
+    
             <div class="stats-container">
                 <div class="stat-card">
                     <div class="stat-number">849 mil</div>
@@ -64,7 +84,6 @@
                 </div>
             </div>
             
-            <!-- Linha do tempo da história do canal -->
             <h2 class="section-title"><i class="fas fa-history"></i> História do Manikomio</h2>
             
             <div class="timeline">
@@ -101,13 +120,11 @@
             </div>
         </section>
         
-        <!-- Página Sobre o Manikas -->
         <section id="about" class="page-content">
             <h2 class="section-title"><i class="fas fa-users"></i> Sobre os Manikas</h2>
             <p class="page-description">Conheça a dupla que faz a magia acontecer no canal Manikomio! Orochinho e Doazin são os responsáveis por trazer risadas e entretenimento para centenas de milhares de fãs.</p>
             
             <div class="team-container">
-                <!-- Orochinho -->
                 <div class="team-member">
                     <div class="member-photo">
                         <i class="fas fa-crown"></i>
@@ -115,14 +132,13 @@
                     <div class="member-info">
                         <h3 class="member-name">Orochinho</h3>
                         <div class="member-role">Apresentador e Criador de Conteúdo</div>
-                        <p>Conhecido por seu humor ácido e reações exageradas, Orochinho é o cérebro por trás de muitos dos desafios mais malucos do canal. Sempre com uma tirada pronta, ele mantém o ritmo das gravações acelerado e divertido.</p>
+                        <p>Conhecido por seu humor ácido e reações exageradas, Orochinho é o cérebro por trás de muitos dos desafios mais malucos do canal.</p>
                         <div class="member-traits">
                             <i class="fas fa-bolt"></i> Energia máxima | <i class="fas fa-lightbulb"></i> Ideias criativas
                         </div>
                     </div>
                 </div>
                 
-                <!-- Doazin -->
                 <div class="team-member">
                     <div class="member-photo">
                         <i class="fas fa-theater-masks"></i>
@@ -130,7 +146,7 @@
                     <div class="member-info">
                         <h3 class="member-name">Doazin</h3>
                         <div class="member-role">Apresentador e Editor Chefe</div>
-                        <p>Doazin é o contraponto perfeito para Orochinho. Com um humor mais sarcástico e uma presença de cena impecável, ele frequentemente vira o jogo nos desafios mais difíceis. Responsável pela edição e pelo ritmo cômico dos vídeos.</p>
+                        <p>Doazin é o contraponto perfeito para Orochinho. Com um humor mais sarcástico e uma presença de cena impecável.</p>
                         <div class="member-traits">
                             <i class="fas fa-magic"></i> Timing perfeito | <i class="fas fa-video"></i> Editor experiente
                         </div>
@@ -140,18 +156,15 @@
             
             <div class="dynamic-section">
                 <h3><i class="fas fa-handshake"></i> A Dinâmica da Dupla</h3>
-                <p>O sucesso do Manikomio está na química única entre Orochinho e Doazin. Enquanto Orochinho é impulsivo e cheio de energia, Doazin é calculista e estratégico. Juntos, eles criam situações cômicas que parecem roteirizadas, mas são sempre espontâneas e genuínas.</p>
-                <p>Os fãs adoram os momentos em que os dois se enfrentam em desafios, criando rivalidades saudáveis que sempre terminam em muitas risadas. A dupla também é conhecida por interagir constantemente com a comunidade, incorporando sugestões dos fãs em seus vídeos.</p>
+                <p>O sucesso do Manikomio está na química única entre Orochinho e Doazin. Juntos, eles criam situações cômicas que parecem roteirizadas, mas são sempre espontâneas e genuínas.</p>
             </div>
         </section>
         
-        <!-- Página A Produção -->
         <section id="production" class="page-content">
             <h2 class="section-title"><i class="fas fa-video"></i> A Equipe de Produção</h2>
-            <p class="page-description">Por trás das câmeras, uma equipe talentosa trabalha para garantir que cada vídeo do Manikomio seja divertido, bem produzido e de alta qualidade. Conheça os profissionais que fazem a magia acontecer!</p>
+            <p class="page-description">Por trás das câmeras, uma equipe talentosa trabalha para garantir que cada vídeo do Manikomio seja divertido, bem produzido e de alta qualidade.</p>
             
             <div class="team-container">
-                <!-- Lucy -->
                 <div class="team-member">
                     <div class="member-photo lucy-photo">
                         <i class="fas fa-film"></i>
@@ -159,14 +172,13 @@
                     <div class="member-info">
                         <h3 class="member-name">Lucy</h3>
                         <div class="member-role">Diretora de Produção</div>
-                        <p>Responsável por coordenar todas as gravações e garantir que o cronograma seja cumprido. Lucy é a organizadora da equipe, sempre com planos detalhados e soluções para imprevistos.</p>
+                        <p>Responsável por coordenar todas as gravações e garantir que o cronograma seja cumprido.</p>
                         <div class="member-traits">
                             <i class="fas fa-clipboard-list"></i> Organização | <i class="fas fa-calendar-alt"></i> Planejamento
                         </div>
                     </div>
                 </div>
                 
-                <!-- Killua -->
                 <div class="team-member">
                     <div class="member-photo killua-photo">
                         <i class="fas fa-camera"></i>
@@ -174,14 +186,13 @@
                     <div class="member-info">
                         <h3 class="member-name">Killua</h3>
                         <div class="member-role">Diretor de Fotografia</div>
-                        <p>Especialista em iluminação e enquadramento, Killua garante que cada cena tenha a qualidade visual que o canal merece. Também é responsável pelos efeitos visuais especiais.</p>
+                        <p>Especialista em iluminação e enquadramento, Killua garante que cada cena tenha a qualidade visual.</p>
                         <div class="member-traits">
                             <i class="fas fa-lightbulb"></i> Iluminação | <i class="fas fa-eye"></i> Enquadramento
                         </div>
                     </div>
                 </div>
                 
-                <!-- Paulo -->
                 <div class="team-member">
                     <div class="member-photo paulo-photo">
                         <i class="fas fa-music"></i>
@@ -189,14 +200,13 @@
                     <div class="member-info">
                         <h3 class="member-name">Paulo</h3>
                         <div class="member-role">Editor de Som e Trilha</div>
-                        <p>Paulo é o responsável por toda a parte sonora do canal. Desde a captação de áudio durante as gravações até a trilha sonora e efeitos especiais que dão vida aos vídeos.</p>
+                        <p>Paulo é o responsável por toda a parte sonora do canal.</p>
                         <div class="member-traits">
                             <i class="fas fa-volume-up"></i> Áudio | <i class="fas fa-headphones"></i> Trilha sonora
                         </div>
                     </div>
                 </div>
                 
-                <!-- Jojo -->
                 <div class="team-member">
                     <div class="member-photo jojo-photo">
                         <i class="fas fa-paint-brush"></i>
@@ -204,7 +214,7 @@
                     <div class="member-info">
                         <h3 class="member-name">Jojo</h3>
                         <div class="member-role">Designer e Motion Graphics</div>
-                        <p>Jojo cria todas as artes, thumbnails, animações e elementos visuais do canal. Seu trabalho colorido e cartoonizado define a identidade visual única do Manikomio.</p>
+                        <p>Jojo cria todas as artes, thumbnails, animações e elementos visuais do canal.</p>
                         <div class="member-traits">
                             <i class="fas fa-palette"></i> Design | <i class="fas fa-play-circle"></i> Animações
                         </div>
@@ -215,19 +225,18 @@
             <div class="process-section">
                 <h3><i class="fas fa-cogs"></i> Como é Feito um Vídeo do Manikomio</h3>
                 <ol class="process-list">
-                    <li><strong>Brainstorming:</strong> A equipe se reúne para discutir ideias e conceitos para novos vídeos.</li>
-                    <li><strong>Pré-produção:</strong> Lucy planeja os detalhes da gravação, enquanto Jojo prepara os elementos visuais necessários.</li>
-                    <li><strong>Gravação:</strong> Orochinho e Doazin gravam o conteúdo, com Killua cuidando da fotografia e Paulo do áudio.</li>
-                    <li><strong>Pós-produção:</strong> Doazin edita o vídeo, Paulo adiciona trilha sonora e efeitos, e Jojo finaliza com gráficos e animações.</li>
-                    <li><strong>Revisão e publicação:</strong> Toda a equipe assiste ao vídeo final, faz ajustes e então publica para os fãs!</li>
+                    <li><strong>Brainstorming:</strong> A equipe se reúne para discutir ideias.</li>
+                    <li><strong>Pré-produção:</strong> Lucy planeja os detalhes da gravação.</li>
+                    <li><strong>Gravação:</strong> Orochinho e Doazin gravam o conteúdo.</li>
+                    <li><strong>Pós-produção:</strong> Edição, trilha sonora e gráficos.</li>
+                    <li><strong>Revisão e publicação:</strong> Ajustes finais e publicação.</li>
                 </ol>
             </div>
         </section>
         
-        <!-- Página Contato -->
         <section id="contact" class="page-content">
             <h2 class="section-title"><i class="fas fa-envelope"></i> Entre em Contato</h2>
-            <p class="page-description">Tem alguma ideia para o canal, proposta de parceria ou simplesmente quer mandar um salve para a equipe? Entre em contato conosco!</p>
+            <p class="page-description">Tem alguma ideia para o canal, proposta de parceria ou simplesmente quer mandar um salve para a equipe?</p>
             
             <div class="contact-container">
                 <div class="contact-info">
@@ -240,7 +249,7 @@
                         <div class="contact-details">
                             <h3>E-mail</h3>
                             <p>contato@manikomio.com.br</p>
-                            <p class="contact-note">Para parcerias, propostas comerciais e geral</p>
+                            <p class="contact-note">Para parcerias e propostas comerciais</p>
                         </div>
                     </div>
                     
@@ -251,7 +260,7 @@
                         <div class="contact-details">
                             <h3>Celular</h3>
                             <p>+55 (11) 98765-4321</p>
-                            <p class="contact-note">Atendimento comercial: Segunda a Sexta, 9h-18h</p>
+                            <p class="contact-note">Segunda a Sexta, 9h-18h</p>
                         </div>
                     </div>
                     
@@ -263,18 +272,6 @@
                             <h3>Caixa Postal</h3>
                             <p>Lucia Marikas (Caixa Postal 1234)</p>
                             <p>São Paulo - SP, CEP: 01234-567</p>
-                            <p class="contact-note">Para cartas, presentes e correspondências</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Horário de Atendimento</h3>
-                            <p>Segunda a Sexta: 9h às 18h</p>
-                            <p>Sábado: 10h às 14h</p>
                         </div>
                     </div>
                 </div>
@@ -318,17 +315,16 @@
         </section>
     </main>
     
-    <!-- Footer -->
     <footer>
-        <div class="logo" style="justify-content: center;">
-            <img src="logo.jpeg" alt="Logo Manikomio" class="logo-image">
+        <div class="logo">
+            <img src="logo.jpg" alt="Logo Manikomio" class="logo-image">
             <h2>Manikomio <span class="mushroom"></span></h2>
         </div>
         
-        <p class="footer-description">Canal de humor com Orochinho e Doazin trazendo entretenimento, desafios malucos e muita diversão para toda a família!</p>
+        <p class="footer-description">Canal de humor com Orochinho e Doazin trazendo entretenimento, desafios malucos e muita diversão!</p>
         
         <div class="social-links">
-            <a href="https://youtube.com/@Manikomioboko" class="social-link" target="_blank" aria-label="YouTube">
+            <a href="https://youtube.com/@Manikomioloko" class="social-link" target="_blank" aria-label="YouTube">
                 <i class="fab fa-youtube"></i>
             </a>
             <a href="https://instagram.com/canalmanikomio" class="social-link" target="_blank" aria-label="Instagram">
@@ -348,7 +344,6 @@
             <a href="#" class="nav-link" data-page="production">A Produção</a>
             <a href="#" class="nav-link" data-page="contact">Contato</a>
             <a href="#">Seja Membro</a>
-            <a href="#">Política de Privacidade</a>
         </div>
         
         <div class="copyright">
@@ -357,10 +352,26 @@
         </div>
     </footer>
 
-    <!-- Decorações -->
     <div class="decoration rainbow"></div>
     <div class="decoration mushroom-decoration"></div>
 
     <script src="script.js"></script>
+    
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <button class="close-modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="videoPlayer"></div>
+            <div class="video-modal-info">
+                <h3 id="modalVideoTitle"></h3>
+                <div class="modal-stats">
+                    <span id="modalViews"></span>
+                    <span id="modalLikes"></span>
+                    <span id="modalDate"></span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
