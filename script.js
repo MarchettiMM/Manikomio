@@ -1,30 +1,39 @@
-// script.js - Manikomio (REFATORADO)
+// script.js - Manikomio (VERSÃO DEFINITIVA)
 'use strict';
 
 // ===== CONFIGURAÇÕES =====
 const YOUTUBE_API_KEY = 'AIzaSyADye-5HIah6qFBa4xN2whZVo8-uSO_Xs8';
 const CHANNEL_NAME = '@Manikomioloko';
-const MAX_RESULTS = 10;
+const MAX_RESULTS = 12;
 
 // ===== ESTADO GLOBAL =====
-let allVideos = [];
-let filteredVideos = [];
+let allVideos = []; // Todos os vídeos já carregados
+let currentVideos = []; // Vídeos atualmente exibidos (com filtros)
 let isLoading = false;
 let channelId = '';
-let currentSort = 'dateDesc';
-let currentSearch = '';
+let lastSearch = '';
+let lastSort = 'dateDesc';
 
 // ===== INICIALIZAÇÃO =====
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Manikomio inicializando...');
+    console.log('🚀 Site Manikomio carregado');
     
-    // Inicializar componentes
     initNavigation();
     initContactForm();
-    initFilters();
+    initDecorations();
+    initStatsHover();
+    initFooterLinks();
+    initTypeWriter();
     
-    // Carregar vídeos
-    setTimeout(loadYouTubeData, 500);
+    // Configura ordenação padrão
+    const sortSelect = document.getElementById('sortBy');
+    if (sortSelect) sortSelect.value = 'dateDesc';
+    
+    // Inicializa YouTube
+    setTimeout(initYouTube, 800);
+    
+    // Configura eventos dos filtros
+    setTimeout(initFilters, 1000);
 });
 
 // ===== NAVEGAÇÃO =====
@@ -33,20 +42,17 @@ function initNavigation() {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             
-            // Ativar link clicado
             document.querySelectorAll('.nav-link').forEach(item => {
                 item.classList.remove('active');
             });
             this.classList.add('active');
             
-            // Mostrar página correspondente
             document.querySelectorAll('.page-content').forEach(page => {
                 page.classList.remove('active');
             });
             
             const pageId = this.getAttribute('data-page');
-            const page = document.getElementById(pageId);
-            if (page) page.classList.add('active');
+            document.getElementById(pageId).classList.add('active');
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
@@ -55,210 +61,265 @@ function initNavigation() {
 
 // ===== CONTATO =====
 function initContactForm() {
-    const form = document.getElementById('contactForm');
-    if (!form) return;
-    
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Obrigado pela sua mensagem! A equipe do Manikomio entrará em contato em breve.');
-        this.reset();
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Obrigado pela sua mensagem! A equipe do Manikomio entrará em contato em breve.');
+            this.reset();
+        });
+    }
+}
+
+// ===== DECORAÇÕES =====
+function initDecorations() {
+    const decorations = document.querySelectorAll('.decoration');
+    decorations.forEach((decoration) => {
+        const top = Math.random() * 80 + 10;
+        const left = Math.random() * 80 + 10;
+        decoration.style.top = `${top}%`;
+        decoration.style.left = `${left}%`;
+        
+        let direction = 1;
+        let position = 0;
+        
+        setInterval(() => {
+            position += 0.5 * direction;
+            if (position > 5 || position < -5) direction *= -1;
+            decoration.style.transform = `translateY(${position}px)`;
+        }, 100);
     });
+}
+
+// ===== ESTATÍSTICAS HOVER =====
+function initStatsHover() {
+    document.querySelectorAll('.stat-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.05)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+}
+
+// ===== FOOTER LINKS =====
+function initFooterLinks() {
+    document.querySelectorAll('.footer-links .nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const pageId = this.getAttribute('data-page');
+            const targetLink = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+            if (targetLink) {
+                targetLink.click();
+            }
+        });
+    });
+}
+
+// ===== TYPEWRITER EFFECT =====
+function initTypeWriter() {
+    const title = document.querySelector('.logo h1');
+    if (title) {
+        const originalText = title.textContent;
+        title.textContent = '';
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < originalText.length) {
+                title.textContent += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+        
+        setTimeout(typeWriter, 500);
+    }
 }
 
 // ===== FILTROS =====
 function initFilters() {
-    const sortSelect = document.getElementById('sortBy');
-    const searchInput = document.getElementById('searchVideo');
     const applyButton = document.getElementById('applyFilters');
+    const searchInput = document.getElementById('searchVideo');
+    const sortSelect = document.getElementById('sortBy');
     
-    if (!sortSelect || !searchInput || !applyButton) {
+    if (!applyButton || !searchInput || !sortSelect) {
         console.warn('Elementos de filtro não encontrados');
+        setTimeout(initFilters, 500);
         return;
     }
     
-    // Configurar valores padrão
-    sortSelect.value = 'dateDesc';
-    searchInput.value = '';
+    console.log('✅ Filtros configurados');
     
     // Evento no botão aplicar
     applyButton.addEventListener('click', function(e) {
         e.preventDefault();
-        applyFilters();
+        handleFilterChange();
     });
     
-    // Evento no input de busca (com debounce)
+    // Evento no input (com debounce)
     let searchTimeout;
     searchInput.addEventListener('input', function() {
         clearTimeout(searchTimeout);
         searchTimeout = setTimeout(() => {
-            applyFilters();
-        }, 500);
+            handleFilterChange();
+        }, 600);
     });
     
-    // Evento no select de ordenação
+    // Evento no select
     sortSelect.addEventListener('change', function() {
-        applyFilters();
+        handleFilterChange();
     });
 }
 
-function applyFilters() {
-    const sortSelect = document.getElementById('sortBy');
-    const searchInput = document.getElementById('searchVideo');
+function handleFilterChange() {
+    const sortBy = document.getElementById('sortBy').value;
+    const searchTerm = document.getElementById('searchVideo').value.trim();
     
-    if (!sortSelect || !searchInput) return;
+    console.log('🔄 Mudança de filtros:', { sortBy, searchTerm });
     
-    currentSort = sortSelect.value;
-    currentSearch = searchInput.value.trim().toLowerCase();
+    // Atualizar estado
+    lastSort = sortBy;
+    lastSearch = searchTerm;
     
-    console.log('🔍 Aplicando filtros:', { sort: currentSort, search: currentSearch });
-    
-    // Se não há vídeos carregados ainda, aguarda
-    if (allVideos.length === 0) {
-        console.log('Aguardando carregamento dos vídeos...');
-        return;
-    }
-    
-    // Aplicar filtros
-    filterAndSortVideos();
-}
-
-function filterAndSortVideos() {
-    // 1. Aplicar filtro de busca
-    if (currentSearch) {
-        filteredVideos = allVideos.filter(video => 
-            video.title.toLowerCase().includes(currentSearch) ||
-            video.description?.toLowerCase().includes(currentSearch)
-        );
-    } else {
-        filteredVideos = [...allVideos];
-    }
-    
-    // 2. Aplicar ordenação
-    sortVideos(currentSort);
-    
-    // 3. Exibir resultados
-    displayVideos(filteredVideos);
-}
-
-function sortVideos(sortBy) {
-    switch(sortBy) {
-        case 'dateDesc':
-            filteredVideos.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-            break;
-        case 'dateAsc':
-            filteredVideos.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
-            break;
-        case 'viewsDesc':
-            filteredVideos.sort((a, b) => b.views - a.views);
-            break;
-        case 'viewsAsc':
-            filteredVideos.sort((a, b) => a.views - b.views);
-            break;
-        case 'likesDesc':
-            filteredVideos.sort((a, b) => b.likes - a.likes);
-            break;
-        case 'likesAsc':
-            filteredVideos.sort((a, b) => a.likes - b.likes);
-            break;
-        case 'commentsDesc':
-            filteredVideos.sort((a, b) => b.comments - a.comments);
-            break;
-        case 'commentsAsc':
-            filteredVideos.sort((a, b) => a.comments - b.comments);
-            break;
-        default:
-            filteredVideos.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+    // Se há termo de busca, busca na API
+    if (sortBy || searchTerm) {
+        searchVideosInAPI(searchTerm, sortBy);
     }
 }
 
 // ===== YOUTUBE API =====
-async function loadYouTubeData() {
-    if (isLoading) return;
+async function initYouTube() {
+    console.log('🎬 Inicializando YouTube...');
     
-    isLoading = true;
-    showLoading();
-    
+    // Primeiro: buscar canal
     try {
-        // 1. Buscar ID do canal
-        channelId = await getChannelId();
-        if (!channelId) throw new Error('Não foi possível encontrar o canal');
+        // Método 1: Por handle
+        const handleName = CHANNEL_NAME.replace('@', '');
+        const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${handleName}&key=${YOUTUBE_API_KEY}`;
         
-        // 2. Buscar vídeos do canal
-        await loadChannelVideos();
-        
-    } catch (error) {
-        console.error('❌ Erro ao carregar dados:', error);
-        showError('Erro ao carregar vídeos do YouTube. Tente recarregar a página.');
-    } finally {
-        isLoading = false;
-    }
-}
-
-async function getChannelId() {
-    try {
-        // Remover @ do nome do canal
-        const handle = CHANNEL_NAME.replace('@', '');
-        
-        // Tentar buscar por handle
-        const url = `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=${handle}&key=${YOUTUBE_API_KEY}`;
-        console.log('🔍 Buscando canal:', url);
-        
-        const response = await fetch(url);
+        console.log('🔍 Buscando canal por handle:', handleName);
+        const response = await fetch(channelUrl);
         const data = await response.json();
         
         if (data.items && data.items.length > 0) {
-            console.log('✅ Canal encontrado:', data.items[0].id);
-            return data.items[0].id;
+            channelId = data.items[0].id;
+            console.log('✅ Canal encontrado:', channelId);
+        } else {
+            // Método 2: Por busca
+            await findChannelBySearch();
         }
         
-        // Se não encontrar por handle, tentar por busca
-        console.log('⚠️ Canal não encontrado por handle, tentando busca...');
-        const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(CHANNEL_NAME)}&type=channel&maxResults=1&key=${YOUTUBE_API_KEY}`;
-        
-        const searchResponse = await fetch(searchUrl);
-        const searchData = await searchResponse.json();
-        
-        if (searchData.items && searchData.items.length > 0) {
-            const channelId = searchData.items[0].id.channelId;
-            console.log('✅ Canal encontrado por busca:', channelId);
-            return channelId;
+        // Carregar vídeos iniciais
+        if (channelId) {
+            await loadInitialVideos();
+        } else {
+            throw new Error('Canal não encontrado');
         }
-        
-        throw new Error('Canal não encontrado');
         
     } catch (error) {
-        console.error('❌ Erro ao buscar canal:', error);
-        throw error;
+        console.error('❌ Erro na inicialização:', error);
+        showErrorMessage('Erro ao carregar vídeos. Tente recarregar a página.');
     }
 }
 
-async function loadChannelVideos() {
+async function findChannelBySearch() {
+    const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(CHANNEL_NAME)}&type=channel&maxResults=1&key=${YOUTUBE_API_KEY}`;
+    
     try {
-        // Buscar vídeos do canal (ordenados por data)
-        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=${MAX_RESULTS}&key=${YOUTUBE_API_KEY}`;
-        console.log('📥 Buscando vídeos:', url);
+        const response = await fetch(searchUrl);
+        const data = await response.json();
         
+        if (data.items && data.items.length > 0) {
+            channelId = data.items[0].id.channelId;
+            console.log('✅ Canal encontrado por busca:', channelId);
+        }
+    } catch (error) {
+        console.error('❌ Erro na busca do canal:', error);
+    }
+}
+
+async function loadInitialVideos() {
+    if (isLoading) return;
+    isLoading = true;
+    
+    showLoading('Carregando vídeos...');
+    
+    try {
+        // Carregar vídeos mais recentes
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&order=date&type=video&maxResults=${MAX_RESULTS}&key=${YOUTUBE_API_KEY}`;
+        
+        console.log('📥 Carregando vídeos iniciais');
         const response = await fetch(url);
         const data = await response.json();
         
         if (!data.items || data.items.length === 0) {
-            showNoVideos();
+            showNoVideosMessage();
             return;
         }
         
-        // Extrair IDs dos vídeos
         const videoIds = data.items
             .map(item => item.id.videoId)
             .filter(id => id)
             .join(',');
         
-        // Buscar detalhes dos vídeos
+        // Carregar detalhes
         await loadVideoDetails(videoIds, data.items);
         
     } catch (error) {
         console.error('❌ Erro ao carregar vídeos:', error);
-        throw error;
+        showErrorMessage('Erro na conexão com YouTube.');
+    } finally {
+        isLoading = false;
     }
+}
+
+async function searchVideosInAPI(searchTerm, sortBy) {
+    if (isLoading || !channelId) return;
+    isLoading = true;
+    
+    showLoading(`Buscando: "${searchTerm}"`);
+    
+    try {
+        // Determinar ordenação da API
+        let apiOrder = 'relevance'; // Padrão para busca
+        
+        // Converter ordenação para parâmetro da API
+        if (sortBy.includes('date')) {
+            apiOrder = 'date';
+        } else if (sortBy.includes('view')) {
+            apiOrder = 'viewCount';
+        } else if (sortBy.includes('like')) {
+            apiOrder = 'rating';
+        }
+        
+        const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&q=${encodeURIComponent(searchTerm)}&type=video&order=${apiOrder}&maxResults=${MAX_RESULTS}&key=${YOUTUBE_API_KEY}`;
+        
+        console.log('🔍 Buscando na API:', { searchTerm, apiOrder });
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (!data.items || data.items.length === 0) {
+            showNoResultsMessage(searchTerm);
+            return;
+        }
+        
+        const videoIds = data.items
+            .map(item => item.id.videoId)
+            .filter(id => id)
+            .join(',');
+        
+        // Carregar detalhes
+        await loadVideoDetails(videoIds, data.items);
+        
+    } catch (error) {
+        console.error('❌ Erro na busca:', error);
+        showErrorMessage('Erro na busca. Tente novamente.');
+    } finally {
+        isLoading = false;
+    }
+    applyLocalSorting(sortBy)
 }
 
 async function loadVideoDetails(videoIds, videoItems) {
@@ -268,13 +329,12 @@ async function loadVideoDetails(videoIds, videoItems) {
         const response = await fetch(url);
         const data = await response.json();
         
-        if (!data.items || data.items.length === 0) {
-            throw new Error('Nenhum detalhe de vídeo retornado');
+        if (!data.items) {
+            throw new Error('Sem dados de vídeo');
         }
         
         // Processar vídeos
-        allVideos = data.items.map(video => {
-            const searchItem = videoItems.find(item => item.id.videoId === video.id);
+        const newVideos = data.items.map(video => {
             return {
                 id: video.id,
                 title: video.snippet.title,
@@ -289,17 +349,72 @@ async function loadVideoDetails(videoIds, videoItems) {
             };
         });
         
-        console.log(`✅ ${allVideos.length} vídeos carregados`);
+        // Atualizar lista de vídeos
+        allVideos = newVideos;
+        currentVideos = [...newVideos];
         
-        // Aplicar filtros iniciais
-        filteredVideos = [...allVideos];
-        sortVideos(currentSort);
-        displayVideos(filteredVideos);
+        console.log(`✅ ${newVideos.length} vídeos carregados`);
+        
+        // Aplicar ordenação local se necessário
+        if (lastSort.includes('Asc') || lastSort.includes('comments')) {
+            applyLocalSorting(lastSort);
+        }
+        
+        // Exibir vídeos
+        displayVideos(currentVideos);
         
     } catch (error) {
         console.error('❌ Erro nos detalhes:', error);
         throw error;
     }
+}
+
+// ===== ORDENAÇÃO LOCAL =====
+function applyLocalSorting(sortBy) {
+    if (!currentVideos || currentVideos.length === 0) return;
+    
+    console.log('🔀 Ordenando localmente:', sortBy);
+    
+    const videosToSort = [...currentVideos];
+    
+    switch (sortBy) {
+        case 'dateDesc':
+            // Já vem ordenado por data da API
+            break;
+            
+        case 'dateAsc':
+            videosToSort.sort((a, b) => new Date(a.publishedAt) - new Date(b.publishedAt));
+            break;
+            
+        case 'viewsDesc':
+            videosToSort.sort((a, b) => b.views - a.views);
+            break;
+            
+        case 'viewsAsc':
+            videosToSort.sort((a, b) => a.views - b.views);
+            break;
+            
+        case 'likesDesc':
+            videosToSort.sort((a, b) => b.likes - a.likes);
+            break;
+            
+        case 'likesAsc':
+            videosToSort.sort((a, b) => a.likes - b.likes);
+            break;
+            
+        case 'commentsDesc':
+            videosToSort.sort((a, b) => b.comments - a.comments);
+            break;
+            
+        case 'commentsAsc':
+            videosToSort.sort((a, b) => a.comments - b.comments);
+            break;
+            
+        default:
+            break;
+    }
+    
+    currentVideos = videosToSort;
 }
 
 // ===== EXIBIÇÃO DE VÍDEOS =====
@@ -308,15 +423,7 @@ function displayVideos(videos) {
     if (!container) return;
     
     if (!videos || videos.length === 0) {
-        container.innerHTML = `
-            <div class="video-error">
-                <i class="fas fa-search"></i>
-                <p>Nenhum vídeo encontrado com os filtros atuais.</p>
-                <button onclick="clearFilters()" class="btn" style="margin-top: 15px;">
-                    <i class="fas fa-times"></i> Limpar Filtros
-                </button>
-            </div>
-        `;
+        showNoVideosMessage();
         return;
     }
     
@@ -365,7 +472,7 @@ function displayVideos(videos) {
     
     container.innerHTML = html;
     
-    // Adicionar eventos aos botões de play
+    // Configurar botões play
     document.querySelectorAll('.play-button').forEach(button => {
         button.addEventListener('click', function() {
             const videoId = this.getAttribute('data-video-id');
@@ -378,11 +485,8 @@ function playVideo(videoId) {
     const video = allVideos.find(v => v.id === videoId);
     if (!video) return;
     
-    // Abrir modal ou nova aba
+    // Abrir no YouTube
     window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank');
-    
-    // Ou para abrir no modal (se tiver configurado):
-    // openVideoModal(videoId);
 }
 
 // ===== FUNÇÕES AUXILIARES =====
@@ -416,13 +520,8 @@ function formatDate(dateString) {
         if (diffDays === 0) return 'Hoje';
         if (diffDays === 1) return 'Ontem';
         if (diffDays <= 7) return `Há ${diffDays} dias`;
-        if (diffDays <= 30) return `Há ${Math.floor(diffDays / 7)} semanas`;
         
-        return date.toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
+        return date.toLocaleDateString('pt-BR');
     } catch {
         return dateString;
     }
@@ -438,20 +537,20 @@ function formatNumber(num) {
     return num.toString();
 }
 
-// ===== FUNÇÕES DE INTERFACE =====
-function showLoading() {
+// ===== MENSAGENS DE STATUS =====
+function showLoading(message) {
     const container = document.getElementById('videos-container');
     if (!container) return;
     
     container.innerHTML = `
         <div class="video-loading">
             <i class="fas fa-spinner fa-spin"></i>
-            <p>Carregando vídeos do Manikomio...</p>
+            <p>${message}</p>
         </div>
     `;
 }
 
-function showError(message) {
+function showErrorMessage(message) {
     const container = document.getElementById('videos-container');
     if (!container) return;
     
@@ -459,21 +558,6 @@ function showError(message) {
         <div class="video-error">
             <i class="fas fa-exclamation-triangle"></i>
             <p>${message}</p>
-            <button onclick="retryLoad()" class="btn" style="margin-top: 15px;">
-                <i class="fas fa-redo"></i> Tentar Novamente
-            </button>
-        </div>
-    `;
-}
-
-function showNoVideos() {
-    const container = document.getElementById('videos-container');
-    if (!container) return;
-    
-    container.innerHTML = `
-        <div class="video-error">
-            <i class="fas fa-video-slash"></i>
-            <p>Nenhum vídeo encontrado para este canal.</p>
             <button onclick="location.reload()" class="btn" style="margin-top: 15px;">
                 <i class="fas fa-redo"></i> Recarregar Página
             </button>
@@ -481,43 +565,52 @@ function showNoVideos() {
     `;
 }
 
-// ===== FUNÇÕES GLOBAIS (para uso nos botões) =====
-window.clearFilters = function() {
-    const sortSelect = document.getElementById('sortBy');
-    const searchInput = document.getElementById('searchVideo');
+function showNoVideosMessage() {
+    const container = document.getElementById('videos-container');
+    if (!container) return;
     
-    if (sortSelect) sortSelect.value = 'dateDesc';
-    if (searchInput) searchInput.value = '';
-    
-    currentSort = 'dateDesc';
-    currentSearch = '';
-    
-    applyFilters();
-};
-
-window.retryLoad = function() {
-    loadYouTubeData();
-};
-
-// ===== TESTE DE FUNCIONAMENTO =====
-function testAPI() {
-    console.log('🧪 Testando API do YouTube...');
-    
-    const testUrl = `https://www.googleapis.com/youtube/v3/channels?part=id&forHandle=Manikomioloko&key=${YOUTUBE_API_KEY}`;
-    
-    fetch(testUrl)
-        .then(response => {
-            console.log('Status:', response.status);
-            return response.json();
-        })
-        .then(data => {
-            console.log('Resposta:', data);
-            if (data.error) {
-                console.error('Erro da API:', data.error);
-            }
-        })
-        .catch(error => console.error('Erro de rede:', error));
+    container.innerHTML = `
+        <div class="video-error">
+            <i class="fas fa-video-slash"></i>
+            <p>Nenhum vídeo encontrado.</p>
+        </div>
+    `;
 }
 
-// Executar teste após carregamento
-setTimeout(testAPI, 3000);
+function showNoResultsMessage(searchTerm) {
+    const container = document.getElementById('videos-container');
+    if (!container) return;
+    
+    container.innerHTML = `
+        <div class="video-error">
+            <i class="fas fa-search"></i>
+            <p>Nenhum resultado para "${searchTerm}".</p>
+            <button onclick="clearSearch()" class="btn" style="margin-top: 15px;">
+                <i class="fas fa-times"></i> Limpar Busca
+            </button>
+        </div>
+    `;
+}
+
+// ===== FUNÇÕES GLOBAIS =====
+window.clearSearch = function() {
+    const searchInput = document.getElementById('searchVideo');
+    const sortSelect = document.getElementById('sortBy');
+    
+    if (searchInput) searchInput.value = '';
+    if (sortSelect) sortSelect.value = 'dateDesc';
+    
+    lastSearch = '';
+    lastSort = 'dateDesc';
+    
+    // Recarregar vídeos iniciais
+    if (channelId) {
+        loadInitialVideos();
+    }
+};
+
+window.reloadVideos = function() {
+    if (channelId) {
+        loadInitialVideos();
+    }
+};

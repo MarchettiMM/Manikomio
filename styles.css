@@ -95,27 +95,6 @@ nav ul {
     letter-spacing: 1px;
 }
 
-.mushroom {
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    background: white;
-    border-radius: 50% 50% 0 0;
-    position: relative;
-    margin: 0 5px;
-}
-
-.mushroom::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 10px;
-    background: #8B4513;
-    border-radius: 0 0 10px 10px;
-    bottom: -10px;
-    left: 2.5px;
-}
-
 nav ul {
     display: flex;
     list-style: none;
