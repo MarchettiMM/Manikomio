@@ -2,7 +2,7 @@
 'use strict';
 
 // ===== CONFIGURAÇÕES =====
-const YOUTUBE_API_KEY = 'AIzaSyADye-5HIah6qFBa4xN2whZVo8-uSO_Xs8';
+const YOUTUBE_API_KEY = 'AIzaSyCazihY4Ephy19avGh5iJjOz3honhKFmLc';
 const CHANNEL_NAME = '@Manikomioloko';
 const MAX_RESULTS = 12;
 
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initNavigation();
     initContactForm();
-    initDecorations();
     initStatsHover();
     initFooterLinks();
     initTypeWriter();
@@ -69,26 +68,6 @@ function initContactForm() {
             this.reset();
         });
     }
-}
-
-// ===== DECORAÇÕES =====
-function initDecorations() {
-    const decorations = document.querySelectorAll('.decoration');
-    decorations.forEach((decoration) => {
-        const top = Math.random() * 80 + 10;
-        const left = Math.random() * 80 + 10;
-        decoration.style.top = `${top}%`;
-        decoration.style.left = `${left}%`;
-        
-        let direction = 1;
-        let position = 0;
-        
-        setInterval(() => {
-            position += 0.5 * direction;
-            if (position > 5 || position < -5) direction *= -1;
-            decoration.style.transform = `translateY(${position}px)`;
-        }, 100);
-    });
 }
 
 // ===== ESTATÍSTICAS HOVER =====
@@ -614,3 +593,87 @@ window.reloadVideos = function() {
         loadInitialVideos();
     }
 };
+
+// No seu script.js - Dados hardcoded (simples para começar)
+const PRODUCTS_DATA = [
+    {
+        id: 1,
+        title: "Camisa de Botão Oversized",
+        image: "camisabotao.jpeg",
+        price: "R$ 179,90",
+        oldPrice: "",
+        link: "https://www.lolja.com.br/produto/camisa-de-botao-oversized-manikomio-17148",
+        tags: ["6x sem juros"]
+    },
+    {
+        id: 2,
+        title: "Shoulder Bag Colorida - Hehe Colorido",
+        image: "shoulder.jpeg",
+        price: "R$ 119,90",
+        oldPrice: "",
+        link: "https://www.lolja.com.br/produto/shoulder-bag-colorida-hehe-colorido-19833",
+        tags: ["6x sem juros"]
+    },
+    {
+        id: 3,
+        title: "Camiseta Oversized Preta",
+        image: "camisapreta.jpeg",
+        price: "R$ 129,90",
+        oldPrice: "R$ 199,90",
+        link: "https://www.lolja.com.br/produto/camiseta-oversized-preta-gnomo-17142",
+        tags: ["-35%"]
+    },
+    {
+        id: 4,
+        title: "Jogo de Cartas Perna Kurta",
+        image: "pernakurta.jpeg",
+        price: "R$ 69,90",
+        oldPrice: "",
+        link: "https://www.lolja.com.br/produto/card-game-perna-curta-21162",
+        tags: ["6x sem juros"]
+    },
+    {
+        id: 5,
+        title: "Moletom Preto Elfcore",
+        image: "moletompreto.jpeg",
+        price: "R$ 249,90",
+        oldPrice: "R$ 269,90",
+        link: "https://www.lolja.com.br/produto/moletom-preto-elfcore-18961",
+        tags: ["-7%"]
+    }
+];
+
+// Função para carregar produtos
+function loadProducts() {
+    const container = document.getElementById('products-container');
+    if (!container) return;
+    
+    let html = '';
+    
+    PRODUCTS_DATA.forEach(product => {
+        html += `
+            <a href="${product.link}" target="_blank" class="product-card">
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.title}" loading="lazy">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">${product.title}</h3>
+                    <div class="product-price">${product.price}</div>
+                    ${product.oldPrice ? `<div class="product-old-price">${product.oldPrice}</div>` : ''}
+                    
+                    <div class="product-tags">
+                        ${product.tags.map(tag => `<span class="product-tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            </a>
+        `;
+    });
+    
+    container.innerHTML = html;
+}
+
+// Adicione na inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    // ... outras inicializações ...
+    loadProducts(); // Adicione esta linha
+});

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header>
         <div class="header-overlay"></div>
@@ -29,8 +31,9 @@
 
     <main>
         <section id="home" class="page-content active">
-            <h2 class="section-title"><img src="iconepeq.png" alt="Ícone Pequeno" class="icone-peq"> Vídeos em Destaque</h2>
-            
+            <h2 class="section-title"><img src="iconepeq.png" alt="Ícone Pequeno" class="icone-peq"> Vídeos em Destaque
+            </h2>
+
             <div class="video-filters">
                 <div class="filter-group">
                     <label for="sortBy">Ordenar por:</label>
@@ -64,7 +67,69 @@
                     </div>
                 </div>
             </div>
-    
+
+            <section class="products-section">
+                <h2 class="section-title"><img src="iconepeq.png" alt="Ícone Pequeno" class="icone-peq"> Produtos
+                    Oficiais</h2>
+
+                <div class="products-scroll">
+                    <div class="products-container" id="products-container">
+                        <!-- Carregado via JavaScript -->
+                    </div>
+                </div>
+
+                <p class="products-note">
+                    <i class="fas fa-info-circle"></i> Todos os produtos são vendidos e entregues pela Lolja©.
+                </p>
+            </section>
+
+            <section class="spotify-section">
+                <h2 class="section-title"><i class="fab fa-spotify"></i> Sinta a Batida</h2>
+
+                <div class="spotify-embeds">
+                    <!-- Player do perfil/artista -->
+                    <div class="spotify-embed">
+                        <iframe data-testid="embed-iframe" style="border-radius:12px"
+                            src="https://open.spotify.com/embed/artist/4tGpR6u6ETp2YmgPCZUCBA?utm_source=generator&theme=0"
+                            width="100%" height="352" frameBorder="0" allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"></iframe>
+                    </div>
+
+
+
+                    <!-- Player de playlist específica -->
+                    <div class="spotify-embed">
+                        <iframe data-testid="embed-iframe" style="border-radius:12px"
+                            src="https://open.spotify.com/embed/artist/2nonSwxfkumvQnZyYBLTS4?utm_source=generator"
+                            width="100%" height="352" frameBorder="0" allowfullscreen=""
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                            loading="lazy"></iframe>
+                    </div>
+                </div>
+            </section>
+            <!-- Cole APÓS a seção do Spotify -->
+            <section class="simple-membership">
+                <div class="simple-cta">
+                    <div class="cta-header">
+                        <i class="fab fa-youtube cta-icon"></i>
+                        <h3 class="cta-title">Seja <span class="highlight">Membro</span></h3>
+                    </div>
+
+                    <p class="cta-text">E tenha acesso a conteúdos exclusivos!</p>
+
+                    <a href="https://www.youtube.com/channel/UC2ZzAfnuWJOQ_gqP4wRTLqg/join" target="_blank"
+                        class="simple-button">
+                        <i class="fab fa-youtube"></i>
+                        Tornar-se Membro
+                    </a>
+                </div>
+            </section>
+
+        </section>
+        </section>
+
+        <section id="about" class="page-content">
             <div class="stats-container">
                 <div class="stat-card">
                     <div class="stat-number">849 mil</div>
@@ -75,127 +140,120 @@
                     <div class="stat-label">Vídeos</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number">150M+</div>
+                    <div class="stat-number">70M+</div>
                     <div class="stat-label">Visualizações</div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Integrantes</div>
-                </div>
             </div>
-            
-            <h2 class="section-title"><i class="fas fa-history"></i> História do Manikomio</h2>
-            
+
+            <h2 class="section-title"><img src="iconepeq.png" alt="Ícone Pequeno" class="icone-peq"> História do Canal
+            </h2>
+
             <div class="timeline">
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="timeline-year"><i class="fas fa-seedling"></i> 2018</div>
-                        <p>Orochinho e Doazin se conhecem em um evento de criadores de conteúdo e decidem criar um canal juntos. As primeiras gravações são feitas em um apartamento com equipamentos simples.</p>
+                        <div class="timeline-year"><i class="fas fa-seedling"></i> 2022</div>
+                        <p>Orochinho, Doazin e a equipe decidem criar um canal juntos. Aqui se inicia a jornada no
+                            primeiro estúdio de gravações.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="timeline-year"><i class="fas fa-video"></i> 2019</div>
-                        <p>Lançamento do canal Manikomio com o primeiro vídeo "Experimentando comidas estranhas". O canal alcança 50 mil inscritos em 6 meses e a equipe ganha dois novos integrantes: Lucy e Killua.</p>
+                        <div class="timeline-year"><i class="fas fa-video"></i> 2023</div>
+                        <p>O canal cresce e novas experiências e convidados especiais aparecem, é firmada a parceria com
+                            a Lolja.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="timeline-year"><i class="fas fa-rocket"></i> 2020</div>
-                        <p>Vídeo "IRLUZIOS" se torna viral, alcançando 1 milhão de visualizações em um mês. O canal ultrapassa 300 mil inscritos e a equipe se muda para um estúdio profissional.</p>
+                        <div class="timeline-year"><i class="fas fa-rocket"></i> 2024</div>
+                        <p>Mudamos para um estúdio novo! Muitas novidades e conteúdos inédito surgiram.</p>
                     </div>
                 </div>
                 <div class="timeline-item">
                     <div class="timeline-content">
-                        <div class="timeline-year"><i class="fas fa-trophy"></i> 2021</div>
-                        <p>Manikomio é indicado ao prêmio "Melhor Canal de Humor" do YouTube Brasil. A equipe completa é formada com a entrada de Paulo e Jojo. O canal chega a 600 mil inscritos.</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <div class="timeline-year"><i class="fas fa-star"></i> 2022-2023</div>
-                        <p>O canal alcança a marca de 849 mil inscritos e diversifica o conteúdo com séries temáticas, colaborações com outros criadores e participações em eventos ao vivo.</p>
+                        <div class="timeline-year"><i class="fas fa-trophy"></i> 2025</div>
+                        <p>Ano de expansão e lançamento de novos produtos e acessórios. O canal chega a 800 mil
+                            inscritos.</p>
                     </div>
                 </div>
             </div>
         </section>
-        
-        <section id="about" class="page-content">
-            <h2 class="section-title"><i class="fas fa-users"></i> Sobre os Manikas</h2>
-            <p class="page-description">Conheça a dupla que faz a magia acontecer no canal Manikomio! Orochinho e Doazin são os responsáveis por trazer risadas e entretenimento para centenas de milhares de fãs.</p>
-            
+
+        <section id="production" class="page-content">
+
+            <h2 class="section-title"><img src="iconepeq.png" alt="Ícone Pequeno" class="icone-peq"> Apresentadores
+            </h2>
+            <p class="page-description">A dupla que faz a magia acontecer no Manikomio! Orochinho e Doazin
+                são os rostos por trás das câmeras.</p>
+
             <div class="team-container">
                 <div class="team-member">
                     <div class="member-photo">
-                        <i class="fas fa-crown"></i>
+                        <img src="orochinho.png" alt="Orochinho Foto" class="member-photo">
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Orochinho</h3>
                         <div class="member-role">Apresentador e Criador de Conteúdo</div>
-                        <p>Conhecido por seu humor ácido e reações exageradas, Orochinho é o cérebro por trás de muitos dos desafios mais malucos do canal.</p>
+                        <p>Conhecido por seu humor ácido e reações exageradas, Orochinho é o cérebro por trás de muitos
+                            dos desafios mais malucos do canal.</p>
                         <div class="member-traits">
-                            <i class="fas fa-bolt"></i> Energia máxima | <i class="fas fa-lightbulb"></i> Ideias criativas
+                            <i class="fas fa-bolt"></i> Energia máxima | <i class="fas fa-lightbulb"></i> Ideias
+                            criativas
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="team-member">
                     <div class="member-photo">
-                        <i class="fas fa-theater-masks"></i>
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Doazin</h3>
                         <div class="member-role">Apresentador e Editor Chefe</div>
-                        <p>Doazin é o contraponto perfeito para Orochinho. Com um humor mais sarcástico e uma presença de cena impecável.</p>
+                        <p>Doazin é o contraponto perfeito para Orochinho. Com um humor mais sarcástico e uma presença
+                            de cena impecável.</p>
                         <div class="member-traits">
-                            <i class="fas fa-magic"></i> Timing perfeito | <i class="fas fa-video"></i> Editor experiente
+                            <i class="fas fa-magic"></i> Timing perfeito | <i class="fas fa-video"></i> Editor
+                            experiente
                         </div>
                     </div>
                 </div>
             </div>
-            
-            <div class="dynamic-section">
-                <h3><i class="fas fa-handshake"></i> A Dinâmica da Dupla</h3>
-                <p>O sucesso do Manikomio está na química única entre Orochinho e Doazin. Juntos, eles criam situações cômicas que parecem roteirizadas, mas são sempre espontâneas e genuínas.</p>
-            </div>
-        </section>
-        
-        <section id="production" class="page-content">
+
             <h2 class="section-title"><i class="fas fa-video"></i> A Equipe de Produção</h2>
-            <p class="page-description">Por trás das câmeras, uma equipe talentosa trabalha para garantir que cada vídeo do Manikomio seja divertido, bem produzido e de alta qualidade.</p>
-            
+            <p class="page-description">Por trás das câmeras, uma equipe talentosa trabalha para garantir que cada vídeo
+                do Manikomio seja divertido, bem produzido e de alta qualidade.</p>
+
             <div class="team-container">
                 <div class="team-member">
-                    <div class="member-photo lucy-photo">
-                        <i class="fas fa-film"></i>
+                    <div class="lucy-photo">
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Lucy</h3>
                         <div class="member-role">Diretora de Produção</div>
                         <p>Responsável por coordenar todas as gravações e garantir que o cronograma seja cumprido.</p>
                         <div class="member-traits">
-                            <i class="fas fa-clipboard-list"></i> Organização | <i class="fas fa-calendar-alt"></i> Planejamento
+                            <i class="fas fa-clipboard-list"></i> Organização | <i class="fas fa-calendar-alt"></i>
+                            Planejamento
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="team-member">
-                    <div class="member-photo killua-photo">
-                        <i class="fas fa-camera"></i>
+                    <div class="killua-photo">
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Killua</h3>
                         <div class="member-role">Diretor de Fotografia</div>
-                        <p>Especialista em iluminação e enquadramento, Killua garante que cada cena tenha a qualidade visual.</p>
+                        <p>Especialista em iluminação e enquadramento, Killua garante que cada cena tenha a qualidade
+                            visual.</p>
                         <div class="member-traits">
                             <i class="fas fa-lightbulb"></i> Iluminação | <i class="fas fa-eye"></i> Enquadramento
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="team-member">
-                    <div class="member-photo paulo-photo">
-                        <i class="fas fa-music"></i>
+                    <div class="paulo-photo">
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Paulo</h3>
@@ -206,10 +264,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="team-member">
-                    <div class="member-photo jojo-photo">
-                        <i class="fas fa-paint-brush"></i>
+                    <div class="jojo-photo">
                     </div>
                     <div class="member-info">
                         <h3 class="member-name">Jojo</h3>
@@ -221,27 +278,18 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="process-section">
-                <h3><i class="fas fa-cogs"></i> Como é Feito um Vídeo do Manikomio</h3>
-                <ol class="process-list">
-                    <li><strong>Brainstorming:</strong> A equipe se reúne para discutir ideias.</li>
-                    <li><strong>Pré-produção:</strong> Lucy planeja os detalhes da gravação.</li>
-                    <li><strong>Gravação:</strong> Orochinho e Doazin gravam o conteúdo.</li>
-                    <li><strong>Pós-produção:</strong> Edição, trilha sonora e gráficos.</li>
-                    <li><strong>Revisão e publicação:</strong> Ajustes finais e publicação.</li>
-                </ol>
-            </div>
         </section>
-        
+
         <section id="contact" class="page-content">
-            <h2 class="section-title"><i class="fas fa-envelope"></i> Entre em Contato</h2>
-            <p class="page-description">Tem alguma ideia para o canal, proposta de parceria ou simplesmente quer mandar um salve para a equipe?</p>
-            
+            <h2 class="section-title"><img src="iconepeq.png" alt="Ícone Pequeno" class="icone-peq"> Entre em Contato
+            </h2>
+            <p class="page-description">Tem alguma ideia para o canal, proposta de parceria ou simplesmente quer mandar
+                um salve para a gente?</p>
+
             <div class="contact-container">
                 <div class="contact-info">
                     <h3>Informações de Contato</h3>
-                    
+
                     <div class="contact-item">
                         <div class="contact-icon">
                             <i class="fas fa-envelope"></i>
@@ -249,47 +297,41 @@
                         <div class="contact-details">
                             <h3>E-mail</h3>
                             <p>contato@manikomio.com.br</p>
-                            <p class="contact-note">Para parcerias e propostas comerciais</p>
                         </div>
                     </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div class="contact-details">
-                            <h3>Celular</h3>
-                            <p>+55 (11) 98765-4321</p>
-                            <p class="contact-note">Segunda a Sexta, 9h-18h</p>
-                        </div>
-                    </div>
-                    
+
                     <div class="contact-item">
                         <div class="contact-icon">
                             <i class="fas fa-box"></i>
                         </div>
                         <div class="contact-details">
                             <h3>Caixa Postal</h3>
-                            <p>Lucia Marikas (Caixa Postal 1234)</p>
-                            <p>São Paulo - SP, CEP: 01234-567</p>
+                            <p>Lucia Manikas</p>
+                            <p>Nº da caixa postal: 20256</p>
+                            <p>Agência: AGF Santa Cruz</p>
+                            <p>CEP: 04119-000</p>
+                            <p>Rua Domingos de Morais, 2253</p>
+                            <p>São Paulo - SP</p>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="contact-form">
                     <h3>Envie uma Mensagem</h3>
-                    
+
                     <form id="contactForm">
                         <div class="form-group">
                             <label for="name">Seu Nome</label>
-                            <input type="text" id="name" class="form-control" placeholder="Como devemos te chamar?" required>
+                            <input type="text" id="name" class="form-control"
+                                required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="email">Seu E-mail</label>
-                            <input type="email" id="email" class="form-control" placeholder="exemplo@email.com" required>
+                            <input type="email" id="email" class="form-control" placeholder="exemplo@email.com"
+                                required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="subject">Assunto</label>
                             <select id="subject" class="form-control" required>
@@ -300,12 +342,13 @@
                                 <option value="other">Outro</option>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="message">Sua Mensagem</label>
-                            <textarea id="message" class="form-control" rows="5" placeholder="Conte-nos o que precisa..." required></textarea>
+                            <textarea id="message" class="form-control" rows="5"
+                                required></textarea>
                         </div>
-                        
+
                         <button type="submit" class="btn">
                             <i class="fas fa-paper-plane"></i> Enviar Mensagem
                         </button>
@@ -314,15 +357,15 @@
             </div>
         </section>
     </main>
-    
+
     <footer>
         <div class="logo">
             <img src="logo.jpg" alt="Logo Manikomio" class="logo-image">
-            <h2>Manikomio <span class="mushroom"></span></h2>
+            <h2>Manikomio</span></h2>
         </div>
-        
-        <p class="footer-description">Canal de humor com Orochinho e Doazin trazendo entretenimento, desafios malucos e muita diversão!</p>
-        
+
+        <p class="footer-description">Eh o manikas, hehe!</p>
+
         <div class="social-links">
             <a href="https://youtube.com/@Manikomioloko" class="social-link" target="_blank" aria-label="YouTube">
                 <i class="fab fa-youtube"></i>
@@ -330,33 +373,32 @@
             <a href="https://instagram.com/canalmanikomio" class="social-link" target="_blank" aria-label="Instagram">
                 <i class="fab fa-instagram"></i>
             </a>
-            <a href="#" class="social-link" aria-label="Twitter">
+            <a href="twitter.com/canalmanikomio" class="social-link" aria-label="Twitter">
                 <i class="fab fa-twitter"></i>
             </a>
-            <a href="#" class="social-link" aria-label="TikTok">
+            <a href="tiktok.com/@manikomioofc" class="social-link" aria-label="TikTok">
                 <i class="fab fa-tiktok"></i>
             </a>
+            <a href="discord.gg/manikomio" class="social-link" aria-label="TikTok">
+                <i class="fab fa-discord"></i>
+            </a>
         </div>
-        
+
         <div class="footer-links">
             <a href="#" class="nav-link" data-page="home">Início</a>
             <a href="#" class="nav-link" data-page="about">Sobre o Manikas</a>
             <a href="#" class="nav-link" data-page="production">A Produção</a>
             <a href="#" class="nav-link" data-page="contact">Contato</a>
-            <a href="#">Seja Membro</a>
         </div>
-        
+
         <div class="copyright">
-            <p>&copy; 2023 Manikomio - Todos os direitos reservados</p>
-            <p>Desenvolvido com <i class="fas fa-heart"></i> pela equipe Manikomio</p>
+            <p>&copy; 2025 Manikomio - Todos os direitos reservados</p>
+            <p>Desenvolvido com <i class="fas fa-heart"></i> pela equipe do Manikomio</p>
         </div>
     </footer>
 
-    <div class="decoration rainbow"></div>
-    <div class="decoration mushroom-decoration"></div>
-
     <script src="script.js"></script>
-    
+
     <div id="videoModal" class="video-modal">
         <div class="video-modal-content">
             <button class="close-modal">
@@ -374,4 +416,5 @@
         </div>
     </div>
 </body>
+
 </html>
